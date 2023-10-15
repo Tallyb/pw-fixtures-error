@@ -1,7 +1,7 @@
 import { test, expect } from './fixtures';
 
-test('has title', async ({ page, useFakeTime }) => {
-  await useFakeTime('2020-01-01T00:00:00Z');
+test.use({fakeTime: '2020-01-01T00:00:00Z'});
+test('has title', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
   // Expect a title "to contain" a substring.
