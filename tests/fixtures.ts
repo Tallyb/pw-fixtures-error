@@ -1,26 +1,23 @@
-import { type Locator, test as base, Page } from '@playwright/test';
+import { type Locator, test as base, Page, mergeTests } from '@playwright/test';
 
 import { fakeTimeFixtures, FakeTimeFixtures } from './fake-time.fixtures';
 
 type TodoPage = {
-  Page: Page, 
+  Page: Page,
 };
 
 type MyFixtures = {
   todoPage: TodoPage;
 };
 
-export const test = base.extend<MyFixtures & FakeTimeFixtures >({
-  ...fakeTimeFixtures, 
+const todoPage = base.extend<MyFixtures & FakeTimeFixtures >({
   todoPage: async ({ page }, use) => {
     const todoPage = {
       Page: page,
     };
     await use(todoPage);
   },
-
-
-
 });
 
+export const test = mergeTests(todoPage, fakeTimeFixtures);
 export { expect } from '@playwright/test';
